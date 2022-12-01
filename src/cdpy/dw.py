@@ -117,16 +117,18 @@ class CdpyDw(CdpSdkBase):
         )
 
     def create_vw(self, cluster_id:str, dbc_id:str, vw_type:str, name:str, template:str = None,
-                  autoscaling_min_cluster:int = None, autoscaling_max_cluster:int = None,
+                  autoscaling_min_cluster:int = None, autoscaling_max_cluster:int = None, autoscaling_impalaScaleDownDelaySeconds:int = None,
                   common_configs:dict = None, application_configs:dict = None, ldap_groups:list = None,
                   enable_sso:bool = None, tags:dict = None):
         
-        if any(x is not None for x in [autoscaling_min_cluster, autoscaling_max_cluster]):
+        if any(x is not None for x in [autoscaling_min_cluster, autoscaling_max_cluster, autoscaling_impalaScaleDownDelaySeconds]):
             autoscaling = {}
             if autoscaling_min_cluster is not None and autoscaling_min_cluster != 0:
                 autoscaling['minClusters'] = autoscaling_min_cluster
             if autoscaling_max_cluster is not None and autoscaling_max_cluster != 0:
                 autoscaling['maxClusters'] = autoscaling_max_cluster
+            if autoscaling_impalaScaleDownDelaySeconds is not None and autoscaling_impalaScaleDownDelaySeconds != 0:
+                autoscaling['impalaScaleDownDelaySeconds'] = autoscaling_impalaScaleDownDelaySeconds
         else:
             autoscaling = None
 
